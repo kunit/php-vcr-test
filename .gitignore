@@ -1,0 +1,5 @@
+.idea
+.phpunit*
+vendor
+tests/fixtures
+
