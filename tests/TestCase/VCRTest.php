@@ -7,26 +7,13 @@ class VCRTest extends TestCase
 {
     const URL = 'https://www.google.com';
 
-    public function setUp() : void
-    {
-        parent::setUp();
-
-        VCR::turnOn();
-    }
-
-    public function tearDown(): void
-    {
-        VCR::eject();
-        VCR::turnOff();
-
-        parent::tearDown();
-    }
-
     /**
      * @test
      */
-    public function curlRequest()
+    public function curlRequest() : void
     {
+        VCR::turnOn();
+
         $cassetteName = 'curl.yaml';
         VCR::insertCassette($cassetteName);
 
@@ -36,18 +23,26 @@ class VCRTest extends TestCase
         $expected = curl_exec($ch);
         curl_close($ch);
 
+        VCR::eject();
+        VCR::turnOff();
+
         $this->assertSameBody($expected, $cassetteName);
     }
 
     /**
      * @test
      */
-    public function fileGetContentsRequest()
+    public function fileGetContentsRequest() : void
     {
+        VCR::turnOn();
+
         $cassetteName = 'file_get_contents.yaml';
         VCR::insertCassette($cassetteName);
 
         $expected = file_get_contents(static::URL);
+
+        VCR::eject();
+        VCR::turnOff();
 
         $this->assertSameBody($expected, $cassetteName);
     }

@@ -1,5 +1,4 @@
 .idea
 .phpunit*
 vendor
-tests/fixtures
-
+tests/fixtures/*.yaml
